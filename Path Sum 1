@@ -1,0 +1,53 @@
+#include<iostream>
+#include<queue>
+using namespace std;
+
+class Node{
+  public:
+    int data;
+    Node* left;
+    Node* right;
+    
+    Node(int val){
+        data = val;
+        left = NULL;
+        right = NULL;
+    }
+    
+ 
+};
+
+bool PathSum(Node* root,int target,int sum){
+    if(!root) return false;
+    
+    sum += root->data;
+    
+    if(!root->left && !root->right){
+        if(sum == target) 
+            return true;
+        else
+            return false;
+    }
+    
+    bool leftSum = PathSum(root->left,target,sum);
+    bool rightSum = PathSum(root->right,target,sum);
+    
+    return leftSum || rightSum;
+}
+int main(){
+    Node* root = new Node(1);
+
+    root->left = new Node(2);
+    root->right = new Node(3);
+
+    root->left->left = new Node(4);
+    root->left->right = new Node(5);
+
+    root->right->left = new Node(6);
+    root->right->right = new Node(7);
+    
+    cout<<"Is valid Sum ? " << PathSum(root,7,0);
+
+    return 0;
+    
+}
