@@ -1,0 +1,11 @@
+name: Repository Quality
+on: [push, pull_request]
+jobs:
+  quality:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Compile C++ sources
+        shell: bash
+        run: |
+          for file in $(find . -name '*.cpp'); do g++ -std=c++17 -fsyntax-only "$file"; done
